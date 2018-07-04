@@ -10,7 +10,7 @@ class Mastermind
 
 	private
 	def turns_remaining
-		@turns_remaining = 3
+		@turns_remaining = 12
 	end
 
 	def decrement_turn
