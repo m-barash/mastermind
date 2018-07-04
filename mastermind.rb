@@ -10,7 +10,7 @@ class Mastermind
 
 	private
 	def turns_remaining
-		@turns_remaining = 12
+		@turns_remaining = 3
 	end
 
 	def decrement_turn
@@ -34,6 +34,11 @@ class Mastermind
 	end
 
 	private
+	def victory
+		@victory = false
+	end
+
+	private
 	def give_feedback
 		match = 0
 		half_match = 0
@@ -44,13 +49,15 @@ class Mastermind
 			@guessH.each do |key,value|
 				if key == x && value == @cHash[x]
 					match += 1
-					full_match_keys << key
+					full_match_keys << x
+					half_match -= 1 if half_match_keys.include?(x)
 				elsif key != x && value == @cHash[x] 
-					if full_match_keys.include?(key) || half_match_keys.include?(key)
+					if full_match_keys.include?(x) || half_match_keys.include?(x) || half_match_keys.include?(key) || full_match_keys.include?(key)
+						#this whole thing might be uselell, or some of it is useless
 						next
 					else
 						half_match += 1
-						half_match_keys << key
+						half_match_keys << x
 					end
 				end
 			end
@@ -58,8 +65,6 @@ class Mastermind
 		end
 		puts "found #{match} matches"
 		puts "found #{half_match} half matches"
-		p full_match_keys
-		p half_match_keys
 	end
 
 	public
@@ -75,14 +80,19 @@ class Mastermind
 			@guessH['c'] = @user_guess[2]
 			@guessH['d'] = @user_guess[3]
 			if @guessH == @cHash
-				puts "You broke the code! Congratulations!"
+				@victory = true
 				break
 			else
 				give_feedback
 				decrement_turn
 			end
 		end
-		puts "You lost :("
+		if @victory == true
+			puts "Congratulations you broke the code!"
+		else
+			puts "You lost :("
+		end
+		
 		puts "The code was: #{comp_choice}"
 	end
 end
