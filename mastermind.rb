@@ -5,7 +5,7 @@ class Mastermind
 		@name = name
 		puts "Welcome to Mastermind, #{@name} and good luck!"
 		turns_remaining #here to initialize the amount of turns, otherwise it's nill
-		comp_choice #makes the computer choice
+		puts comp_choice #makes the computer choice
 	end
 
 	private
@@ -53,7 +53,7 @@ class Mastermind
 					half_match -= 1 if half_match_keys.include?(x)
 				elsif key != x && value == @cHash[x] 
 					if full_match_keys.include?(x) || half_match_keys.include?(x) || half_match_keys.include?(key) || full_match_keys.include?(key)
-						#this whole thing might be uselell, or some of it is useless
+						#this whole thing might be useless, or some of it is useless
 						next
 					else
 						half_match += 1
@@ -63,6 +63,7 @@ class Mastermind
 			end
 			x = x.next
 		end
+		puts ""
 		puts "found #{match} matches"
 		puts "found #{half_match} half matches"
 	end
@@ -93,7 +94,7 @@ class Mastermind
 			puts "You lost :("
 		end
 		
-		puts "The code was: #{comp_choice}"
+		puts "The code was: #{@cHash}"
 	end
 end
 
