@@ -4,26 +4,26 @@ class Mastermind
 	def initialize(name)
 		@name = name
 		puts "Welcome to Mastermind, #{@name} and good luck!"
-		turns_remaining #here to initialize the amount of turns, otherwise it's nill
-		comp_choice #makes the computer choice
+		turns_remaining 
+		comp_choice 
 	end
 
-	private
+	private # Stores the amount of turns player has remaining, default value is 12
 	def turns_remaining
 		@turns_remaining = 12
 	end
 
-	def decrement_turn
+	def decrement_turn # Decrements the turns amount by 1, called after incorrect guess
 		@turns_remaining -= 1
 	end
 
-	public
+	public # Displays the turns player has left, called at beginning of each turn
 	def display_turns
 		puts "You have #{@turns_remaining} turns remaining"
 	end
 
 	private
-	def comp_choice 
+	def comp_choice # Computer randomly chooses 4 colors, stores choice in a hash
 		colors = ['black', 'white', 'red', 'blue']
 		@cHash = {'a' => '', 'b' => '', 'c' => '', 'd' => ''}
 		@cHash['a'] = colors[rand(4)]
@@ -34,12 +34,12 @@ class Mastermind
 	end
 
 	private
-	def victory
+	def victory # Stores the victory condition value, default is false
 		@victory = false
 	end
 
 	private
-	def give_feedback
+	def give_feedback # Calculates full matches (color and position) and half matches (color only)
 		match = 0
 		half_match = 0
 		x = "a"
@@ -69,7 +69,7 @@ class Mastermind
 	end
 
 	public
-	def play 
+	def play # Gets user input, checks for full match, displays the correct response 
 		while @turns_remaining > 0
 			puts "---------------------------------------"
 			display_turns
