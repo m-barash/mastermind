@@ -52,8 +52,7 @@ class Mastermind
 					full_match_keys << x
 					half_match -= 1 if half_match_keys.include?(x)
 				elsif key != x && value == @cHash[x] 
-					if full_match_keys.include?(x) || half_match_keys.include?(x) || half_match_keys.include?(key) || full_match_keys.include?(key)
-						#this whole thing might be useless, or some of it is 
+					if full_match_keys.include?(x) || half_match_keys.include?(x) 
 						next
 					else
 						half_match += 1
@@ -61,6 +60,7 @@ class Mastermind
 					end
 				end
 			end
+			half_match = 0 if match == 3
 			x = x.next
 		end
 		puts ""
@@ -71,7 +71,7 @@ class Mastermind
 	public
 	def play 
 		while @turns_remaining > 0
-			puts "-----------------------"
+			puts "---------------------------------------"
 			display_turns
 			puts "enter your guess"
 			@user_guess = gets.chomp.downcase.split(" ")
