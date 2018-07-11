@@ -5,7 +5,7 @@ class Mastermind
 		@name = name
 		puts "Welcome to Mastermind, #{@name} and good luck!"
 		turns_remaining 
-		puts comp_choice 
+		comp_choice 
 	end
 
 	private # Stores the amount of turns player has remaining, default value is 12
@@ -30,7 +30,7 @@ class Mastermind
 		@cHash['b'] = colors[rand(4)]
 		@cHash['c'] = colors[rand(4)]
 		@cHash['d'] = colors[rand(4)]
-		@cHash = {"a"=>"white", "b"=>"white", "c"=>"black", "d"=>"blue"}
+		@cHash
 	end
 
 	private
