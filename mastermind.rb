@@ -5,7 +5,7 @@ class Mastermind
 		@name = name
 		puts "Welcome to Mastermind, #{@name} and good luck!"
 		turns_remaining 
-		comp_choice 
+		puts comp_choice 
 	end
 
 	private # Stores the amount of turns player has remaining, default value is 12
@@ -30,7 +30,7 @@ class Mastermind
 		@cHash['b'] = colors[rand(4)]
 		@cHash['c'] = colors[rand(4)]
 		@cHash['d'] = colors[rand(4)]
-		@cHash
+		@cHash = {"a"=>"white", "b"=>"white", "c"=>"black", "d"=>"blue"}
 	end
 
 	private
@@ -40,32 +40,31 @@ class Mastermind
 
 	private
 	def give_feedback # Calculates full matches (color and position) and half matches (color only)
-		match = 0
-		half_match = 0
+		full_match_index = []
+		half_match_index = {}
 		x = "a"
-		full_match_keys = []
-		half_match_keys = []
 		while x < "e" 
 			@guessH.each do |key,value|
 				if key == x && value == @cHash[x]
-					match += 1
-					full_match_keys << x
-					half_match -= 1 if half_match_keys.include?(x)
+					full_match_index << key
+					if half_match_index.has_value?(key)
+						half_match_index.delete_if {|k, v| v == key}
+					end 
 				elsif key != x && value == @cHash[x] 
-					if full_match_keys.include?(x) || half_match_keys.include?(x) 
+					if  half_match_index.has_value?(key) || full_match_index.include?(key)# REMEMBER ME
 						next
 					else
-						half_match += 1
-						half_match_keys << x
+						half_match_index[x] = key
 					end
 				end
 			end
-			half_match = 0 if match == 3
 			x = x.next
 		end
+		match = full_match_index.length
+		half_match = half_match_index.length
 		puts ""
-		puts "found #{match} matches"
-		puts "found #{half_match} half matches"
+		puts "found #{match} matches at #{full_match_index}"
+		puts "found #{half_match} half matches at #{half_match_index}"
 	end
 
 	public
