@@ -26,10 +26,9 @@ class Mastermind
 	def comp_choice # Computer randomly chooses 4 colors, stores choice in a hash
 		colors = ['black', 'white', 'red', 'blue']
 		@cHash = {'a' => '', 'b' => '', 'c' => '', 'd' => ''}
-		@cHash['a'] = colors[rand(4)]
-		@cHash['b'] = colors[rand(4)]
-		@cHash['c'] = colors[rand(4)]
-		@cHash['d'] = colors[rand(4)]
+		@cHash.each do |k, v|
+			@cHash[k] = colors[rand(4)]
+		end
 		@cHash
 	end
 
@@ -40,18 +39,19 @@ class Mastermind
 
 	private
 	def give_feedback # Calculates full matches (color and position) and half matches (color only)
-		full_match_index = []
+		full_match_index = {}
 		half_match_index = {}
 		x = "a"
 		while x < "e" 
 			@guessH.each do |key,value|
 				if key == x && value == @cHash[x]
-					full_match_index << key
-					if half_match_index.has_value?(key)
-						half_match_index.delete_if {|k, v| v == key}
+					full_match_index[x] = key
+					if half_match_index.has_value?(key) || half_match_index.has_key?(x)
+						half_match_index.delete_if {|k, v| v == key || k == x} 
 					end 
 				elsif key != x && value == @cHash[x] 
-					if  half_match_index.has_value?(key) || full_match_index.include?(key)# REMEMBER ME
+					if  (half_match_index.has_value?(key) || full_match_index.has_value?(key) || 
+						full_match_index.has_key?(x) || half_match_index.has_key?(x))
 						next
 					else
 						half_match_index[x] = key
@@ -63,8 +63,8 @@ class Mastermind
 		match = full_match_index.length
 		half_match = half_match_index.length
 		puts ""
-		puts "found #{match} matches at #{full_match_index}"
-		puts "found #{half_match} half matches at #{half_match_index}"
+		puts "found #{match} matches" #at #{full_match_index}"
+		puts "found #{half_match} half matches" #at #{half_match_index}"
 	end
 
 	public
